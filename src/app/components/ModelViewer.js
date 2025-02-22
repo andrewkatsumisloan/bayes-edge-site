@@ -11,80 +11,44 @@ import {
   useGLTF,
 } from "@react-three/drei";
 
-function Model({
-  url,
-  position = [0, 0, 0],
-  rotation = [0, 0, 0],
-  scale = 0.01,
-}) {
+function Model({ url }) {
   const { scene } = useGLTF(url);
-  const clonedScene = scene.clone();
 
   useEffect(() => {
-    clonedScene.scale.set(scale, scale, scale);
-    clonedScene.position.set(...position);
-    clonedScene.rotation.set(...rotation);
+    // Scale down the model
+    scene.scale.set(0.01, 0.01, 0.01);
+    // Adjust position if needed
+    scene.position.set(0, 0, 0);
 
-    clonedScene.traverse((child) => {
+    scene.traverse((child) => {
       if (child.isMesh) {
-        child.material = child.material.clone();
         child.material.color.set("#2563eb");
         child.material.metalness = 0.6;
         child.material.roughness = 0.4;
       }
     });
-  }, [clonedScene, position, rotation, scale]);
+  }, [scene]);
 
-  return <primitive object={clonedScene} />;
+  return <primitive object={scene} />;
 }
 
 function Scene({ modelUrl }) {
-  const radius = 8;
-  const numModels = 8;
-
   return (
     <>
       <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={0.9} />
-      {/* <SpotLight
+      <directionalLight position={[5, 5, 5]} intensity={0.7} />
+      <SpotLight
         position={[-10, 10, -5]}
         intensity={0.3}
         angle={0.3}
         penumbra={1}
         color="#4f46e5"
-      /> */}
+      />
       <Suspense fallback={null}>
-        {modelUrl && (
-          <>
-            {/* Center model */}
-            <Model
-              url={modelUrl}
-              position={[0, 1.5, 0]}
-              rotation={[0, Math.PI / 4, 0]}
-              scale={0.012}
-            />
-
-            {/* Circle of models */}
-            {Array.from({ length: numModels }).map((_, i) => {
-              const angle = (i / numModels) * Math.PI * 2;
-              const x = Math.cos(angle) * radius;
-              const z = Math.sin(angle) * radius;
-
-              return (
-                <Model
-                  key={i}
-                  url={modelUrl}
-                  position={[x, 1.5, z]}
-                  rotation={[0, angle + Math.PI / 2, 0]}
-                  scale={0.008}
-                />
-              );
-            })}
-          </>
-        )}
+        {modelUrl ? <Model url={modelUrl} /> : null}
       </Suspense>
       <Grid
-        position={[0, 0, 0]}
+        position={[0, -1.5, 0]}
         args={[40, 40]}
         cellSize={1}
         cellThickness={0.6}
@@ -108,8 +72,8 @@ export default function ModelViewer({ modelUrl }) {
     <div className="w-full h-screen">
       <Canvas
         camera={{
-          position: isMobile ? [20, 10, 20] : [15, 8, 15],
-          fov: isMobile ? 40 : 60,
+          position: isMobile ? [8, 5, 8] : [5, 3, 5],
+          fov: isMobile ? 40 : 70,
         }}
         style={{ background: "rgb(28, 28, 28)" }}
       >
