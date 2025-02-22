@@ -12,6 +12,7 @@ import {
   Cylinder,
   MeshWobbleMaterial,
 } from "@react-three/drei";
+import * as THREE from "three";
 
 function Model({ url }) {
   const { scene } = useGLTF(url);
@@ -34,7 +35,82 @@ function Model({ url }) {
   return <primitive object={scene} />;
 }
 
-// Table component removed temporarily - will be added back later
+function ColorGrid({ position, size = 40, cellSize = 0.4 }) {
+  const geometry = new THREE.PlaneGeometry(cellSize, cellSize);
+  const cells = [];
+  const count = Math.floor(size / cellSize);
+  const fadeDistance = 18;
+  const fadeStrength = 6.5;
+
+  // Time-based animation
+  const [time, setTime] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime((t) => (t + 0.01) % (Math.PI * 2));
+    }, 16);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Cohesive color palette inspired by Japanese indigo dye (aizome) and complementary tones
+  const baseColors = [
+    "#223B5C", // Deep indigo
+    "#2563eb", // Robot blue (matching the model)
+    "#3C526D", // Muted steel blue
+    "#506D89", // Soft slate
+    "#647D94", // Gentle azure
+    "#A5978B", // Warm taupe (accent)
+    "#7C8C88", // Muted sage (accent)
+  ];
+
+  for (let x = -count / 2; x < count / 2; x++) {
+    for (let z = -count / 2; z < count / 2; z++) {
+      // Create wave-like patterns using sine waves
+      const distanceFromCenter = Math.sqrt(x * x + z * z);
+      const angle = Math.atan2(z, x);
+
+      // Subtle wave pattern
+      const wave = Math.sin(distanceFromCenter * 0.3 + time) * 0.5 + 0.5;
+      const wave2 = Math.cos(angle * 3 + time * 0.5) * 0.5 + 0.5;
+
+      // Combine waves for pattern selection
+      const patternValue = (wave + wave2) / 2;
+
+      // Select color based on pattern
+      const colorIndex = Math.floor(patternValue * baseColors.length);
+      const color = new THREE.Color(baseColors[colorIndex]);
+
+      // Radial fade
+      const fadeScale = Math.exp(
+        -Math.pow((distanceFromCenter * cellSize) / fadeDistance, fadeStrength)
+      );
+
+      // Animate opacity slightly with time
+      const breathingEffect =
+        0.9 + Math.sin(time + distanceFromCenter * 0.2) * 0.1;
+      const opacity = 0.15 * fadeScale * breathingEffect;
+
+      if (opacity > 0.01) {
+        cells.push(
+          <mesh
+            key={`${x}-${z}`}
+            geometry={geometry}
+            position={[x * cellSize, position[1], z * cellSize]}
+            rotation={[-Math.PI / 2, 0, 0]}
+          >
+            <meshBasicMaterial
+              color={color}
+              transparent
+              opacity={opacity}
+              blending={THREE.AdditiveBlending}
+            />
+          </mesh>
+        );
+      }
+    }
+  }
+
+  return <>{cells}</>;
+}
 
 function Scene({ modelUrl }) {
   return (
@@ -43,7 +119,7 @@ function Scene({ modelUrl }) {
       <directionalLight position={[5, 8, 5]} intensity={4} castShadow />
       <SpotLight
         position={[-10, 10, -5]}
-        intensity={0.6}
+        intensity={0.1}
         angle={0.3}
         penumbra={1}
         color="#4f46e5"
@@ -52,20 +128,7 @@ function Scene({ modelUrl }) {
       <Suspense fallback={null}>
         {modelUrl ? <Model url={modelUrl} /> : null}
       </Suspense>
-      <Grid
-        position={[0, -1.5, 0]}
-        args={[40, 40]}
-        cellSize={0.4}
-        cellThickness={2.2}
-        cellColor="#666666"
-        sectionSize={4}
-        sectionThickness={1}
-        sectionColor="#888888"
-        fadeDistance={55}
-        fadeStrength={0.95}
-        followCamera={false}
-        infiniteGrid={true}
-      />
+      <ColorGrid position={[0, -1.5, 0]} size={40} cellSize={0.4} />
     </>
   );
 }

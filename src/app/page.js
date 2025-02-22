@@ -185,16 +185,16 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#1c1c1c] via-[#1c1c1c]/80 to-transparent pb-8 sm:pb-28 pt-24">
+        <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#1c1c1c] via-[#1c1c1c]/80 to-transparent pb-16 sm:pb-28 pt-40">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-2xl mx-auto sm:mx-0">
-              <div className="mono text-white/60 text-xs sm:text-sm tracking-widest mb-1">
+              <div className="mono text-white/60 text-xs sm:text-sm tracking-widest mb-2">
                 // INTRODUCING
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-1 sm:mb-2 text-white tracking-tighter tech-text">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2 sm:mb-4 text-white tracking-tighter tech-text">
                 TYCHO_1.0
               </h2>
-              <p className="text-base sm:text-lg md:text-xl mb-3 sm:mb-6 text-white/80 tracking-wide tech-text leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl mb-4 sm:mb-8 text-white/80 tracking-wide tech-text leading-relaxed">
                 just two arms and some wheels
               </p>
               <button className="mono bg-black/20 backdrop-blur-md px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-medium text-white border border-white/10 shadow-[inset_0px_0.5px_0px_rgba(255,255,255,0.3)] hover:bg-black/30 transition-all text-xs sm:text-sm tracking-wider">
