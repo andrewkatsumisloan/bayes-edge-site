@@ -77,8 +77,8 @@ export default function ModelViewer({ modelUrl }) {
     <div className="w-full h-screen">
       <Canvas
         camera={{
-          position: isMobile ? [8, 2, 8] : [5, 3, 5],
-          fov: isMobile ? 45 : 70,
+          position: isMobile ? [8, 2, 9.5] : [5, 3, 5],
+          fov: isMobile ? 45 : 65,
         }}
         style={{ background: "rgb(28, 28, 28)" }}
       >

@@ -136,49 +136,51 @@ export default function Home() {
         <ModelViewer modelUrl={modelUrl} />
 
         {/* Header */}
-        <div className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 z-10 w-[95%] max-w-5xl">
-          <div className="bg-black/20 backdrop-blur-md px-4 sm:px-8 py-4 sm:py-5 rounded-2xl shadow-[inset_0px_0.5px_0px_rgba(255,255,255,0.3)] border border-white/10">
-            <nav className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
-              <div className="flex items-center gap-3 sm:gap-8 w-full sm:w-auto">
-                <h1 className="mono text-xl sm:text-2xl font-medium tracking-tighter text-white mix-blend-plus-lighter">
-                  BAYES_EDGE
-                </h1>
-                <div className="h-6 w-px bg-white/10"></div>
-                <p className="text-white/60 text-xs sm:text-sm tracking-widest tech-text">
-                  ROBOTICS DIVISION
-                </p>
-              </div>
-              <div className="flex items-center justify-center">
-                <button
-                  onClick={() => {
-                    document
-                      .getElementById("about")
-                      .scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="text-white/80 hover:text-white transition-colors text-xs sm:text-sm tracking-wider mono px-4"
-                >
-                  ABOUT
-                </button>
-                <div className="h-4 w-px bg-white/10"></div>
-                <button
-                  onClick={() => {
-                    document
-                      .getElementById("contact")
-                      .scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="text-white/80 hover:text-white transition-colors text-xs sm:text-sm tracking-wider mono px-4"
-                >
-                  CONTACT
-                </button>
-                <div className="h-4 w-px bg-white/10"></div>
-                <button
-                  onClick={() => setShowPurchaseModal(true)}
-                  className="mono bg-white/10 hover:bg-white/15 px-4 py-1.5 rounded-full text-white border border-white/10 shadow-[inset_0px_0.5px_0px_rgba(255,255,255,0.3)] transition-all text-xs sm:text-sm tracking-wider mx-4"
-                >
-                  PURCHASE();
-                </button>
-              </div>
-            </nav>
+        <div className="absolute top-4 sm:top-6 left-0 right-0 z-10">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="bg-black/20 backdrop-blur-md px-4 sm:px-8 py-4 sm:py-5 rounded-2xl shadow-[inset_0px_0.5px_0px_rgba(255,255,255,0.3)] border border-white/10">
+              <nav className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
+                <div className="flex items-center gap-3 sm:gap-8 w-full sm:w-auto">
+                  <h1 className="mono text-xl sm:text-2xl font-medium tracking-tighter text-white mix-blend-plus-lighter">
+                    BAYES_EDGE
+                  </h1>
+                  <div className="h-6 w-px bg-white/10"></div>
+                  <p className="text-white/60 text-xs sm:text-sm tracking-widest tech-text">
+                    ROBOTICS DIVISION
+                  </p>
+                </div>
+                <div className="flex items-center justify-center">
+                  <button
+                    onClick={() => {
+                      document
+                        .getElementById("about")
+                        .scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="text-white/80 hover:text-white transition-colors text-xs sm:text-sm tracking-wider mono px-4"
+                  >
+                    ABOUT
+                  </button>
+                  <div className="h-4 w-px bg-white/10"></div>
+                  <button
+                    onClick={() => {
+                      document
+                        .getElementById("contact")
+                        .scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="text-white/80 hover:text-white transition-colors text-xs sm:text-sm tracking-wider mono px-4"
+                  >
+                    CONTACT
+                  </button>
+                  <div className="h-4 w-px bg-white/10"></div>
+                  <button
+                    onClick={() => setShowPurchaseModal(true)}
+                    className="mono bg-white/10 hover:bg-white/15 px-4 py-1.5 rounded-full text-white border border-white/10 shadow-[inset_0px_0.5px_0px_rgba(255,255,255,0.3)] transition-all text-xs sm:text-sm tracking-wider mx-4"
+                  >
+                    PURCHASE();
+                  </button>
+                </div>
+              </nav>
+            </div>
           </div>
         </div>
 
