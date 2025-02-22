@@ -9,6 +9,8 @@ import {
   Grid,
   SpotLight,
   useGLTF,
+  Cylinder,
+  MeshWobbleMaterial,
 } from "@react-three/drei";
 
 function Model({ url }) {
@@ -18,7 +20,7 @@ function Model({ url }) {
     // Scale down the model
     scene.scale.set(0.01, 0.01, 0.01);
     // Adjust position if needed
-    scene.position.set(0, 0, 0);
+    scene.position.set(0, 0, -0.5); // Move model to ground level
 
     scene.traverse((child) => {
       if (child.isMesh) {
@@ -32,17 +34,20 @@ function Model({ url }) {
   return <primitive object={scene} />;
 }
 
+// Table component removed temporarily - will be added back later
+
 function Scene({ modelUrl }) {
   return (
     <>
       <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={0.7} />
+      <directionalLight position={[5, 8, 5]} intensity={4} castShadow />
       <SpotLight
         position={[-10, 10, -5]}
-        intensity={0.3}
+        intensity={0.6}
         angle={0.3}
         penumbra={1}
         color="#4f46e5"
+        castShadow
       />
       <Suspense fallback={null}>
         {modelUrl ? <Model url={modelUrl} /> : null}
@@ -50,14 +55,14 @@ function Scene({ modelUrl }) {
       <Grid
         position={[0, -1.5, 0]}
         args={[40, 40]}
-        cellSize={1}
-        cellThickness={0.6}
+        cellSize={0.4}
+        cellThickness={2.2}
         cellColor="#666666"
         sectionSize={4}
         sectionThickness={1}
         sectionColor="#888888"
-        fadeDistance={35}
-        fadeStrength={1}
+        fadeDistance={55}
+        fadeStrength={0.95}
         followCamera={false}
         infiniteGrid={true}
       />
@@ -72,8 +77,8 @@ export default function ModelViewer({ modelUrl }) {
     <div className="w-full h-screen">
       <Canvas
         camera={{
-          position: isMobile ? [8, 5, 8] : [5, 3, 5],
-          fov: isMobile ? 40 : 70,
+          position: isMobile ? [8, 2, 8] : [5, 3, 5],
+          fov: isMobile ? 45 : 70,
         }}
         style={{ background: "rgb(28, 28, 28)" }}
       >
