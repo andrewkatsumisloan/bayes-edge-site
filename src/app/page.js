@@ -112,7 +112,9 @@ function PurchaseModal({ isOpen, onClose }) {
 export default function Home() {
   const [showFooter, setShowFooter] = useState(false);
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
-  const modelUrl = "/models/tycho.gltf"; // You'll need to add your GLTF file to the public/models directory
+
+  // The ModelViewer component supports both .stl and .gltf/.glb file formats
+  const modelUrl = "/models/tycho_decimated.stl"; // Place your STL file in the public/models directory
 
   useEffect(() => {
     const handleScroll = () => {
